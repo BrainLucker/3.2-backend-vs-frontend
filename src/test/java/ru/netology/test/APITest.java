@@ -1,5 +1,6 @@
 package ru.netology.test;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.api.ApiInteraction;
@@ -39,6 +40,11 @@ public class APITest {
         id = userInfo.getId();
         login = userInfo.getLogin();
         password = userInfo.getPassword();
+    }
+
+    @AfterAll
+    static void cleanDB() {
+        db.clearData();
     }
 
     @Test
