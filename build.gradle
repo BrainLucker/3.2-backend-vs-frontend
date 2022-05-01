@@ -23,7 +23,6 @@ dependencies {
     testImplementation 'commons-dbutils:commons-dbutils:1.7'
     testImplementation 'com.codeborne:selenide:5.19.0'
     testImplementation 'org.slf4j:slf4j-simple:1.7.36'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
 }
 
 test {
