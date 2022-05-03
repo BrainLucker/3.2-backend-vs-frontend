@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DbInteraction {
-
     @SneakyThrows
     private Connection getConnection() {
         return DriverManager.getConnection("jdbc:mysql://localhost:3306/app", "admin", "pass");
@@ -31,10 +30,12 @@ public class DbInteraction {
         var runner = new QueryRunner();
 
         try (var conn = getConnection()) {
-            runner.update(conn, "DELETE from card_transactions;");
-            runner.update(conn, "DELETE from cards;");
-            runner.update(conn, "DELETE from auth_codes;");
-            runner.update(conn, "DELETE from users;");
+            runner.execute(conn, "SET FOREIGN_KEY_CHECKS = 0;");
+            runner.update(conn, "TRUNCATE TABLE users;");
+            runner.update(conn, "TRUNCATE TABLE cards;");
+            runner.update(conn, "TRUNCATE TABLE auth_codes;");
+            runner.update(conn, "TRUNCATE TABLE card_transactions;");
+            runner.execute(conn, "SET FOREIGN_KEY_CHECKS = 1;");
         }
     }
 
@@ -94,7 +95,4 @@ public class DbInteraction {
         }
         return cards;
     }
-
-
-
 }

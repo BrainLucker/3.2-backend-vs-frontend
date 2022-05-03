@@ -1,0 +1,2 @@
+docker-compose exec mysql mysql -u admin app -ppass -e "DELETE from cards; DELETE from users;"
+java -jar .\artifacts\app-deadline.jar -P:jdbc.url=jdbc:mysql://localhost:3306/app -P:jdbc.user=admin -P:jdbc.password=pass -port=7777
