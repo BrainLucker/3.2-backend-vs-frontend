@@ -16,10 +16,6 @@ import static org.hamcrest.Matchers.matchesRegex;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/* Запуск SUT:
-.\launch.bat
- */
-
 public class APITest {
     private static final DbInteraction db = new DbInteraction();
     private static final ApiInteraction api = new ApiInteraction();
@@ -42,10 +38,10 @@ public class APITest {
         password = userInfo.getPassword();
     }
 
-    @AfterAll
-    static void cleanDB() {
-        db.clearData();
-    }
+//    @AfterAll
+//    static void cleanDB() {
+//        db.clearData();
+//    }
 
     @Test
     public void shouldLogin() {
@@ -90,7 +86,7 @@ public class APITest {
         api.transfer(token, firstCard.getNumber(), secondCard.getNumber(), amount / 100); // совершаем перевод через API
         var cardsActual = db.getUsersCards(id); // получаем список карт из БД
 
-        firstCard.setBalance(firstCardBalance - amount); // меняем ожидаемые баланс карт на величину перевода
+        firstCard.setBalance(firstCardBalance - amount); // меняем начальный баланс карт на величину перевода
         secondCard.setBalance(secondCardBalance + amount);
         var cardsExpected = new ArrayList<>(Arrays.asList(secondCard.encryptData(), firstCard.encryptData()));
 
@@ -110,7 +106,7 @@ public class APITest {
         api.transfer(token, userCard.getNumber(), recipientCard.getNumber(), amount / 100); // совершаем перевод через API
         var cardsActual = db.getUsersCards(id).get(0); // получаем карту из БД
 
-        userCard.setBalance(userCardBalance - amount); // меняем ожидаемый баланс карты на величину перевода
+        userCard.setBalance(userCardBalance - amount); // меняем начальный баланс карты на величину перевода
         var cardExpected = userCard.encryptData();
 
         assertEquals(cardExpected, cardsActual);
